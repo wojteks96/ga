@@ -17,7 +17,8 @@
     ],
     "semicolon": [
       true,
-      "always"
+      "always",
+      "strict-bound-class-methods"
     ]
   }
 }
