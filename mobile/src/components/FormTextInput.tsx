@@ -32,7 +32,8 @@ const styles = StyleSheet.create({
     height: 40,
     borderColor: colors.BLUE_MAIN,
     borderBottomWidth: StyleSheet.hairlineWidth,
-    marginBottom: 20
+    marginBottom: 20,
+    fontSize: 16
   }
 });
 

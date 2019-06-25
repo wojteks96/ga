@@ -1,5 +1,5 @@
 const strings = {
-  LOG_IN: "Log In",
+  LOGIN: "Log In",
   EMAIL: "Email",
   PASSWORD: "Password"
 };

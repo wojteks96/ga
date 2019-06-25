@@ -20,20 +20,23 @@ class Button extends React.Component<Props> {
 
 const styles = StyleSheet.create({
   container: {
-    width: "100%",
     alignItems: "center",
-    justifyContent: "center",
     backgroundColor: colors.BLUE_MAIN,
+    borderRadius: 4,
+    justifyContent: "center",
     marginBottom: 12,
     paddingVertical: 12,
-    borderRadius: 4,
-    borderWidth: StyleSheet.hairlineWidth,
-    borderColor: "rgba(255,255,255,0.7)"
+    shadowOffset: { width: 0, height: 0 },
+    shadowColor: colors.GREY,
+    shadowOpacity: 1.0,
+    shadowRadius: 5,
+    width: "100%"
   },
   text: {
     color: colors.WHITE,
     textAlign: "center",
-    height: 20
+    height: 20,
+    fontSize: 16
   }
 });
 

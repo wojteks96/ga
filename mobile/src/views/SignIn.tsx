@@ -1,20 +1,31 @@
+import Immutable from "immutable";
 import * as React from "react";
 import { Image, KeyboardAvoidingView, StyleSheet, View } from "react-native";
+import { connect } from "react-redux";
 
 // TODO: Add mock modules for this filetype
 // @ts-ignore
 import splashImage from "../../assets/splash.png";
+import { callAuthLogin } from "../api";
 import Button from "../components/Button";
 import FormTextInput from "../components/FormTextInput";
 import colors from "../config/colors";
 import strings from "../config/strings";
+import { RootState } from "../state";
+import { CallAction } from "../state/api";
+import { getIsFetching, Routes } from "../state/fetch";
+
+interface Props {
+  isFetching: boolean;
+  callAuthLogin(email: string, password: string): CallAction;
+}
 
 interface State {
   email: string;
   password: string;
 }
 
-class SignIn extends React.Component<{}, State> {
+class SignIn extends React.Component<Props, State> {
   public readonly state: State = {
     email: "",
     password: ""
@@ -45,11 +56,16 @@ class SignIn extends React.Component<{}, State> {
             secureTextEntry={true}
             returnKeyType="done"
           />
-          <Button label={strings.LOG_IN} onPress={null} />
+          <Button label={strings.LOGIN} onPress={this.handleLoginPress} />
         </View>
       </KeyboardAvoidingView>
     );
   }
+
+  private handleLoginPress = async () => {
+    const { email, password } = this.state;
+    await this.props.callAuthLogin(email, password);
+  };
 
   private handleEmailSubmitPress = () => {
     if (this.passwordTextInputRef.current) {
@@ -86,4 +102,13 @@ const styles = StyleSheet.create({
   }
 });
 
-export default SignIn;
+function mapStateToProps({ fetch }: RootState) {
+  return {
+    isFetching: getIsFetching(fetch, Immutable.Set([Routes.AUTH_LOGIN]))
+  };
+}
+
+export default connect(
+  mapStateToProps,
+  { callAuthLogin }
+)(SignIn);
