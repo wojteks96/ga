@@ -26,7 +26,6 @@ class AuthLoading extends React.Component<Props> {
 
   private bootstrap = async () => {
     const token = await getAuthToken();
-    console.log("Found token " + token); // tslint:disable-line
     if (!!token) {
       await this.props.setAuthToken(token);
       await this.props.navigation.navigate("App");
