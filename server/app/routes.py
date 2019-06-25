@@ -17,13 +17,13 @@ def index():
 def auth_login():
     data = request.json
 
-    username = data.get('username')
+    email = data.get('email')
     password = data.get('password')
 
-    if username is None or password is None:
-        raise BadRequestHTTPError('Missing username or password')
+    if email is None or password is None:
+        raise BadRequestHTTPError('Missing email or password')
 
-    user = User.get_user_from_credentials(username, password)
+    user = User.get_user_from_credentials(email, password)
     auth_token = user.get_auth_token()
     return json.dumps({'auth_token': auth_token})
 

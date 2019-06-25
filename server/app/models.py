@@ -39,7 +39,8 @@ class User(db.Model):
         except TypeError:
             raise UnauthorizedHTTPError.token_invalid()
 
-        s = itsdangerous.TimedJSONWebSignatureSerializer(app.config['SECRET_KEY'])
+        s = itsdangerous.TimedJSONWebSignatureSerializer(
+                app.config['SECRET_KEY'])
         try:
             data = s.loads(auth_token_bytes)
         except itsdangerous.SignatureExpired:
@@ -53,8 +54,8 @@ class User(db.Model):
         return User.query.get(data['id'])
 
     @classmethod
-    def get_user_from_credentials(cls, username, password):
-        user = User.query.filter_by(username=username).one()
+    def get_user_from_credentials(cls, email, password):
+        user = User.query.filter_by(email=email).one()
         if not user.check_password(password):
             raise UnauthorizedHTTPError.credentials_invalid()
 
