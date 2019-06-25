@@ -8,8 +8,8 @@ async function saveAuthToken(token: AuthToken) {
   await AsyncStorage.setItem(storage.AUTH_TOKEN, token);
 }
 
-async function getAuthToken() {
-  await AsyncStorage.getItem(storage.AUTH_TOKEN);
+function getAuthToken() {
+  return AsyncStorage.getItem(storage.AUTH_TOKEN);
 }
 
 export { AuthToken, getAuthToken, saveAuthToken };

@@ -7,15 +7,16 @@ import { connect } from "react-redux";
 // @ts-ignore
 import splashImage from "../../assets/splash.png";
 import { callAuthLogin } from "../api";
+import commonStyles from "../common-styles";
 import Button from "../components/Button";
 import FormTextInput from "../components/FormTextInput";
-import colors from "../config/colors";
 import strings from "../config/strings";
+import { NavigationViewProps } from "../navigation/types";
 import { RootState } from "../state";
 import { CallAction } from "../state/api";
 import { getIsFetching, Routes } from "../state/fetch";
 
-interface Props {
+interface Props extends NavigationViewProps {
   isFetching: boolean;
   callAuthLogin(email: string, password: string): CallAction;
 }
@@ -35,7 +36,10 @@ class SignIn extends React.Component<Props, State> {
 
   public render() {
     return (
-      <KeyboardAvoidingView style={styles.container} behavior={"padding"}>
+      <KeyboardAvoidingView
+        style={[commonStyles.container, styles.container]}
+        behavior={"padding"}
+      >
         <Image source={splashImage} style={styles.logo} />
         <View style={styles.form}>
           <FormTextInput
@@ -56,13 +60,18 @@ class SignIn extends React.Component<Props, State> {
             secureTextEntry={true}
             returnKeyType="done"
           />
-          <Button label={strings.LOGIN} onPress={this.handleLoginPress} />
+          <Button
+            label={strings.LOGIN}
+            onPress={this.handleLoginPress}
+            isLoading={this.props.isFetching}
+          />
         </View>
       </KeyboardAvoidingView>
     );
   }
 
   private handleLoginPress = async () => {
+    // TODO: Navigate to home on success
     const { email, password } = this.state;
     await this.props.callAuthLogin(email, password);
   };
@@ -84,9 +93,6 @@ class SignIn extends React.Component<Props, State> {
 
 const styles = StyleSheet.create({
   container: {
-    flex: 1,
-    backgroundColor: colors.WHITE,
-    alignItems: "center",
     justifyContent: "space-between"
   },
   logo: {

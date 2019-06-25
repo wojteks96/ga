@@ -1,3 +1,4 @@
+import { saveAuthToken } from "../auth";
 import { CallAction, Method, TypeKeys } from "../state/api";
 import { setAuthToken } from "../state/auth";
 import { Routes } from "../state/fetch";
@@ -21,7 +22,10 @@ function callApi({
 
 function callAuthLogin(email: string, password: string) {
   const data = { email, password };
-  const onSuccess = resData => setAuthToken(resData.auth_token);
+  const onSuccess = resData => {
+    saveAuthToken(resData.auth_token);
+    setAuthToken(resData.auth_token);
+  };
   return callApi({
     route: Routes.AUTH_LOGIN,
     method: Method.POST,

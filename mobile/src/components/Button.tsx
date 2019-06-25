@@ -1,20 +1,36 @@
 import * as React from "react";
-import { StyleSheet, Text, TouchableOpacity } from "react-native";
+import {
+  ActivityIndicator,
+  StyleSheet,
+  Text,
+  TouchableOpacity
+} from "react-native";
+
 import colors from "../config/colors";
 
 interface Props {
   label: string;
+  isLoading?: boolean;
   onPress: () => void;
 }
 
 class Button extends React.Component<Props> {
   public render() {
-    const { label, onPress } = this.props;
+    const { onPress } = this.props;
     return (
       <TouchableOpacity style={styles.container} onPress={onPress}>
-        <Text style={styles.text}>{label}</Text>
+        {this.getContent()}
       </TouchableOpacity>
     );
+  }
+
+  private getContent() {
+    const { isLoading, label } = this.props;
+    if (!!isLoading) {
+      return <ActivityIndicator size={"small"} color={colors.BLUE_LIGHT} />;
+    } else {
+      return <Text style={styles.text}>{label}</Text>;
+    }
   }
 }
 
